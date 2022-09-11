@@ -15,31 +15,12 @@ class _UpdatestudentpageState extends State<Updatestudentpage> {
   var email="";
   var password ="";*/
   final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
-  final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final passwordController = TextEditingController();
-
-
-  /*@override
-  void dispose(){
-    nameController.dispose();
-    emailController.dispose();
-    passwordController.dispose();
-    super.dispose();
-  }*/
-
-  clearText(){
-    nameController.clear();
-    emailController.clear();
-    passwordController.clear();
-
-  }
   CollectionReference students = FirebaseFirestore.instance
       .collection('students');
-  Future<void> upadateUser(id ,name,email,password){
+  Future<void> upadateUser(id,name,email,password){
 return students
     .doc(id)
-    .update({'name': name,'email':email,'password':password})
+    .update({'name': name,'email': email,'password': password})
     .then((value) => print("user update"))
     .catchError((error)=> print('user update error:$error'));
   }
@@ -70,7 +51,7 @@ return students
             var password = data['password'];
             return Padding(
               padding: const EdgeInsets.all(10.0),
-              child: ListView(
+              child: Column(
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(20.0),
@@ -78,13 +59,14 @@ return students
                       //keyboardType: TextInputType.text,
                       autofocus: false,
                       initialValue: name,
+                      onChanged: (value)=> name= value,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Enter your name';
                         }
                         return null;
                       },
-                      onChanged: (value)=> {},
+
 
                       style: new TextStyle(fontSize: 15,
                           color: Colors.black,
@@ -102,7 +84,7 @@ return students
                       //keyboardType: TextInputType.text,
                       autofocus: false,
                       initialValue: email,
-                      onChanged: (value)=> {},
+                      onChanged: (value)=> email= value,
 
                       validator: (value) {
                         if (value == null || value.isEmpty) {
@@ -127,14 +109,15 @@ return students
                     child: TextFormField(
                       //keyboardType: TextInputType.text,
                       autofocus: false,
+                      initialValue: password,
+                      onChanged: (value)=> password= value,
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return 'Enter your Password';
                         }
                         return null;
                       },
-                      initialValue: password,
-                      onChanged: (value)=> {},
+
                       obscureText: true,
 
                       style: new TextStyle(fontSize: 15,
